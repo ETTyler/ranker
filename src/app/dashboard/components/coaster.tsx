@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 
 
 export default function Coaster() {
-  const [details, setDetails] = useState(null)
+  const [details, setDetails] = useState<any>()
 
   const coasterInfo  = async (coaster: string) => {
     try {
