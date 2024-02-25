@@ -16,7 +16,7 @@ export function HeaderMenu() {
       <header className={classes.header}>
         <Group justify="space-between" h="100%" px={20}>
           <a href='#' className={classes.logo}>
-            Hello
+            Ranker
           </a>
           <Group h="100%" gap={0} visibleFrom="sm">
           </Group>

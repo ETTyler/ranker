@@ -1,17 +1,19 @@
 'use client';
 
-import Image from 'next/image'
 import styles from '../page.module.css'
-import { Stack, Paper, Text } from '@mantine/core'
+import { Stack, Paper, Text, Image, Card, Flex, Badge, Button, Group} from '@mantine/core'
 import { useEffect, useState } from 'react'
 
+interface Props {
+  coaster: string
+}
 
-export default function Coaster() {
+
+export default function Coaster( {coaster}: Props) {
   const [details, setDetails] = useState<any>()
 
   const coasterInfo  = async (coaster: string) => {
     try {
-      console.log('fetching')
       const res = await fetch(`/dashboard/components/api?coaster=${coaster}`)
       const data = await res.json()
       return data
@@ -22,8 +24,8 @@ export default function Coaster() {
   }
   
   useEffect(() => {
-    coasterInfo('velocicoaster').then(data => {
-      setDetails(data.response[0])
+    coasterInfo(coaster).then(data => {
+      setDetails(data.response)
     })
   }, [])
   
@@ -31,35 +33,24 @@ export default function Coaster() {
   
   return (
     <>
-      <Stack gap={20} p={20} align='center'>
-        <Paper shadow="xs" p="xl">
-          <Text>{details.name}</Text>
-          <Text>
-            {details.park.name}
-          </Text>
-        </Paper>
-        <Paper shadow="xs" p="xl">
-          <Text>Paper is the most basic ui component</Text>
-          <Text>
-             Use it to create cards, dropdowns, modals and other components that require background
-            with shadow
-          </Text>
-        </Paper>
-        <Paper shadow="xs" p="xl">
-          <Text>Paper is the most basic ui component</Text>
-          <Text>
-             Use it to create cards, dropdowns, modals and other components that require background
-            with shadow
-          </Text>
-        </Paper>
-        <Paper shadow="xs" p="xl">
-          <Text>Paper is the most basic ui component</Text>
-          <Text>
-             Use it to create cards, dropdowns, modals and other components that require background
-            with shadow
-          </Text>
-        </Paper>
-      </Stack>
+    <Card shadow="sm" padding="lg" radius="md" w='30vw' withBorder>
+      <Group justify="space-between"  mb="xs">
+        <Text fw={500}>{details.name} - {details.park}</Text>
+        <Badge color="blue">#{details.rank}</Badge>
+      </Group>
+      <Text size="md" c="dimmed" mb='md'>
+        {details.model}
+      </Text>
+      <Card.Section component="a" href="https://mantine.dev/">
+      <Image
+          radius="md"
+          src={`https://pictures.captaincoaster.com/1440x1440/${details.image}`}
+          alt={details.name}
+          height={300}
+        />
+      </Card.Section>
+      
+    </Card>
     </>
   )
 }
