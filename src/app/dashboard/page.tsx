@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <HeaderMenu />
       <Stack 
-        pt={20}
+        p={20}
         align="center"
         justify="flex-start"
         gap="lg"

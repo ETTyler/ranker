@@ -27,13 +27,13 @@ export default function Coaster( {coaster}: Props) {
     coasterInfo(coaster).then(data => {
       setDetails(data.response)
     })
-  }, [])
+  }, [coaster])
   
   if (!details) return <div>Loading...</div>
   
   return (
     <>
-    <Card shadow="sm" padding="lg" radius="md" w='30vw' withBorder>
+    <Card shadow="sm" padding="lg" radius="md" miw='30vw' withBorder>
       <Group justify="space-between"  mb="xs">
         <Text fw={500}>{details.name} - {details.park}</Text>
         <Badge color="blue">#{details.rank}</Badge>
@@ -41,7 +41,7 @@ export default function Coaster( {coaster}: Props) {
       <Text size="md" c="dimmed" mb='md'>
         {details.model}
       </Text>
-      <Card.Section component="a" href="https://mantine.dev/">
+      <Card.Section >
       <Image
           radius="md"
           src={`https://pictures.captaincoaster.com/1440x1440/${details.image}`}
