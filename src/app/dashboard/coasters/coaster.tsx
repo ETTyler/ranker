@@ -1,6 +1,5 @@
 'use client';
 
-import styles from '../page.module.css'
 import { Stack, Paper, Text, Image, Card, Flex, Badge, Button, Group} from '@mantine/core'
 import { useEffect, useState } from 'react'
 
@@ -14,7 +13,7 @@ export default function Coaster( {coaster}: Props) {
 
   const coasterInfo  = async (coaster: string) => {
     try {
-      const res = await fetch(`/dashboard/components/api?coaster=${coaster}`)
+      const res = await fetch(`/dashboard/coasters/api/coasters?coaster=${coaster}`)
       const data = await res.json()
       return data
     }
@@ -49,7 +48,6 @@ export default function Coaster( {coaster}: Props) {
           height={300}
         />
       </Card.Section>
-      
     </Card>
     </>
   )

@@ -1,10 +1,17 @@
+'use client';
+
 import Image from 'next/image'
 import styles from '../page.module.css'
 import { HeaderMenu } from '../dashboard/header/header'
-import Coaster from '../dashboard/components/coaster'
-import { Input, Stack } from '@mantine/core'
+import Coaster from './coasters/coaster'
+import { Input, Stack, Autocomplete } from '@mantine/core'
+import { useEffect, useState } from 'react'
+import Search from './coasters/search';
 
 export default function Home() {
+
+
+
   return (
     <>
       <HeaderMenu />
@@ -14,7 +21,7 @@ export default function Home() {
         justify="flex-start"
         gap="lg"
       >
-        <Input placeholder="Search for a coaster" />
+        <Search />
         <Coaster coaster="velocicoaster" />
         <Coaster coaster="hyperion" />
         <Coaster coaster="red force" />
