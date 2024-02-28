@@ -28,7 +28,7 @@ export default function Search() {
   return (
     <>
       <Autocomplete 
-        w={400}
+        w='20rem'
         placeholder="Search for a coaster"   
         data = {searchResults}
         value={value}

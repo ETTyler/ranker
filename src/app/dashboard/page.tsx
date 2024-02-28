@@ -10,8 +10,6 @@ import Search from './coasters/search';
 
 export default function Home() {
 
-
-
   return (
     <>
       <HeaderMenu />
