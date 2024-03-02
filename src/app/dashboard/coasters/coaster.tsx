@@ -21,9 +21,21 @@ export default function Coaster( {coaster}: Props) {
       console.log(err)
     }
   }
+
+  const coasterData = async (coaster: string) => {
+    try {
+      const res = await fetch(`/dashboard/coasters/api/coastersv2?coaster=${coaster}`)
+      const data = await res.json()
+      return data
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
   
   useEffect(() => {
-    coasterInfo(coaster).then(data => {
+    coasterData(coaster).then(data => {
       setDetails(data.response)
     })
   }, [coaster])
