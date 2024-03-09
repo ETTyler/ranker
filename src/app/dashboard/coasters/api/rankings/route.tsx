@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
   })
 
   let response = coasters?.topTen
-  console.log(response)
  
   return NextResponse.json({ response })
 }

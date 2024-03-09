@@ -33,7 +33,6 @@ export default function Coaster( {coaster}: Props) {
     }
   }
 
-  
   useEffect(() => {
     coasterData(coaster).then(data => {
       setDetails(data.response)

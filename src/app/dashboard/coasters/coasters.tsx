@@ -6,7 +6,7 @@ import { Input, Stack, Autocomplete } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { cookies } from 'next/headers'
 
-export default function Coasters() {
+export default function Coasters( {userID}: {userID: string}) {
   const [coasters, setCoasters] = useState<any>()
 
   const coasterRankings  = async (userID: string) => {
@@ -23,18 +23,16 @@ export default function Coasters() {
     }
   }
 
-  const userID = "skmss5jsmwgbhzc"
   useEffect(() => {
     coasterRankings(userID).then(data => {
       setCoasters(data.response)
     })
   }
-  , [])
+  , [userID])
 
   return (
     <>
       {coasters && coasters.map((coaster: any) => {
-        console.log(coaster.rank)
         return <Coaster key={coaster.rank} coaster={coaster.id} />
       }
       )}

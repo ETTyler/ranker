@@ -9,8 +9,8 @@ import Coasters from './coasters/coasters'
 import { cookies } from 'next/headers'
 import { lucia, validateRequest } from '../../auth'
 
-export default function Home() {
-
+export default async function Home() {
+  const { user } = await validateRequest();
   return (
     <>
       <HeaderMenu />
@@ -21,7 +21,7 @@ export default function Home() {
         gap="lg"
       >
         <Search />
-        <Coasters />
+        <Coasters userID={user ? user.id : ''} />
       </Stack>
     </>
   )
