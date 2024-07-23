@@ -1,6 +1,6 @@
 'use client';
 
-import { Autocomplete, ActionIcon, Group, TextInput } from '@mantine/core'
+import { Autocomplete, ActionIcon, Group, TextInput, Container } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { IconPlus } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
@@ -43,29 +43,26 @@ export default function Search() {
   }, [value])
     
   return (
-    <>
-    <Modal opened={opened} onClose={close} title="Rankings" centered>
-      <ModalForm />
-    </Modal>
-    <Group>
-      <Autocomplete 
-        w='20rem'
-        placeholder="Search for a coaster"   
-        data = {searchResults}
-        value={value}
-        onChange={setValue}
-        onOptionSubmit={() => setSelected(false)}
-      />
-      <ActionIcon 
-        size="input-sm" 
-        variant="filled" 
-        radius="md"
-        disabled={selected}
-        onClick={open}
-      >
+    <Container w="100%">
+      <Group justify='center'>
+        <Autocomplete 
+          w="70%"
+          placeholder="Search for a coaster"   
+          data = {searchResults}
+          value={value}
+          onChange={setValue}
+          onOptionSubmit={() => setSelected(false)}
+        />
+        <ActionIcon 
+          size="input-sm" 
+          variant="filled" 
+          radius="md"
+          disabled={selected}
+          onClick={open}
+        >
         <IconPlus />
-      </ActionIcon>
-    </Group>
-    </>
+        </ActionIcon>
+      </Group>
+    </Container>
   )
 }
