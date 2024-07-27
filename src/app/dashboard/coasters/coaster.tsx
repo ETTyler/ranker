@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react'
 import CoasterUI from './coasterUI'
 interface Props {
   coaster: string
+  rank: number
 }
 
-export default function Coaster({coaster}: Props) {
+export default function Coaster({coaster, rank}: Props) {
   const [details, setDetails] = useState<any>()
+  console.log(rank)
 
   const coasterInfo  = async (coaster: string) => {
     try {
@@ -58,7 +60,7 @@ export default function Coaster({coaster}: Props) {
   
   return (
     <>
-      <CoasterUI details={details} />
+      <CoasterUI details={details} rank={rank} />
     </>
   )
 }
