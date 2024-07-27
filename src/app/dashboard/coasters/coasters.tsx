@@ -1,51 +1,88 @@
-'use server'
+'use client'
 import Image from 'next/image'
 import styles from '../page.module.css'
 import Coaster from './coaster' 
-import { Input, Stack, Autocomplete } from '@mantine/core'
+import { Input, Stack, Autocomplete, Container } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { cookies } from 'next/headers'
 import { PrismaClient, Prisma } from '@prisma/client'
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 
-export default async function Coasters( {userID}: {userID: string}) {
-  // const [coasters, setCoasters] = useState<any>()
+export default  function Coasters( {userID}: {userID: string}) {
+  const [coasters, setCoasters] = useState<any[]>([])
 
-  // const coasterRankings  = async (userID: string) => {
-  //   try {
-  //     const res = await fetch(`/dashboard/coasters/api/rankings`, {
-  //       method: 'POST',
-  //       body: JSON.stringify({userID: userID}),
-  //     })
-  //     const data = await res.json()
-  //     return data
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   coasterRankings(userID).then(data => {
-  //     setCoasters(data.response)
-  //   })
-  // }
-  // , [userID])
-
-  const prisma = new PrismaClient()
-
-  const res = await prisma.coasters.findFirst({
-    where: {
-      userId: userID 
+  const coasterRankings  = async (userID: string) => {
+    try {
+      const res = await fetch(`/dashboard/coasters/api/rankings`, {
+        method: 'POST',
+        body: JSON.stringify({userID: userID}),
+      })
+      const data = await res.json()
+      return data
     }
-  })
+    catch (err) {
+      console.log(err)
+    }
+  }
 
-  const coasters = res?.topTen
+  useEffect(() => {
+    coasterRankings(userID).then(data => {
+      setCoasters(data.response)
+    })
+  }
+  , [userID])
+
+  // const prisma = new PrismaClient()
+
+  // const res = await prisma.coasters.findFirst({
+  //   where: {
+  //     userId: userID 
+  //   }
+  // })
+
+  // const coasters = res?.topTen
+
+  // Updates an array showing the order the user has put the coasters in, save this to the database
+
+  const reorder = (list: any, startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+  
+  const onDragEnd = (result: any) => {
+    if (!result.destination) return;
+  
+    const items = reorder(coasters, result.source.index, result.destination.index);
+    setCoasters(items);
+  };
+
 
   return (
     <>
-      {Array.isArray(coasters) && coasters.map((coaster: any) => {
-        return <Coaster key={coaster.rank} coaster={coaster.id} />
-      })}
+      <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="droppable">
+        {(provided) => (
+          <Stack {...provided.droppableProps} ref={provided.innerRef}>
+            {coasters.map((coaster, index) => (
+              <Draggable key={coaster.rank} draggableId={coaster.rank.toString()} index={index}>
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <Coaster key={coaster.rank} coaster={coaster.id} />
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </Stack>
+        )}
+      </Droppable>
+    </DragDropContext>
     </>
   )
 }

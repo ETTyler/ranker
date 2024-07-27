@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { IconPlus } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
-import ModalForm from './modalForm';
 
 export default function Search() {
   const [value, setValue] = useState('')

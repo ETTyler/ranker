@@ -6,7 +6,7 @@ export default function CoasterUI({details}: {details: any}) {
     <>
     <Container fluid>
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Group justify="space-between"  mb="xs">
+      <Group justify="space-between" mb="md">
         <Text fw={500}>{details.name}  ({details.park})</Text>
         <Badge color="blue">#{details.rank}</Badge>
       </Group>
