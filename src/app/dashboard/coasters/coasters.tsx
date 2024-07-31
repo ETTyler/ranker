@@ -64,7 +64,7 @@ export default  function Coasters( {userID}: {userID: string}) {
       <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
         {(provided) => (
-          <Stack {...provided.droppableProps} ref={provided.innerRef}>
+          <Stack gap="sm" {...provided.droppableProps} ref={provided.innerRef}>
             {coasters.map((coaster, index) => (
               <Draggable key={coaster.rank} draggableId={coaster.rank.toString()} index={index}>
                 {(provided) => (
