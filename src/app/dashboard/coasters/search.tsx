@@ -3,14 +3,12 @@
 import { Autocomplete, ActionIcon, Group, TextInput, Container } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { IconPlus } from '@tabler/icons-react';
-import { useDisclosure } from '@mantine/hooks';
-import { Modal, Button } from '@mantine/core';
 
-export default function Search() {
+
+export default function Search({userID, setCoasters}: {userID: string, setCoasters: any}) {
   const [value, setValue] = useState('')
   const [selected, setSelected] = useState(true)
   const [searchResults, setSearchResults] = useState([])
-  const [opened, { open, close }] = useDisclosure(false);
 
   const coasterSearch  = async (coaster: string) => {
     if (coaster.length < 3) return {response: []}
@@ -35,9 +33,27 @@ export default function Search() {
     }
   }
 
+  const addCoaster = async (coaster: string) => {
+    const coasterID = coaster.split('#')[1].trim()
+    try {
+      const res = await fetch(`/dashboard/coasters/api/search`, {
+        method: 'POST',
+        body: JSON.stringify({
+          userID: userID,
+          coasterID: coasterID
+        }),
+      })
+      const data = await res.json()
+      setCoasters(data.response)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     coasterSearch(value).then(data => {
-      setSearchResults(data.response.map((coaster: any) => coaster.value))
+      setSearchResults(data.response.map((coaster: any) => coaster.value + " #" + coaster.id))
     })
   }, [value])
     
@@ -57,7 +73,7 @@ export default function Search() {
           variant="filled" 
           radius="md"
           disabled={selected}
-          onClick={open}
+          onClick={() => addCoaster(value)}
         >
         <IconPlus />
         </ActionIcon>

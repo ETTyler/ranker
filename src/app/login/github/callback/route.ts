@@ -26,7 +26,6 @@ export async function GET(request: Request): Promise<Response> {
 		});
 		const githubUser: GitHubUser = await githubUserResponse.json();
 
-		// Replace this with your own DB client.
 		const existingUser = await prisma.user.findUnique({
       where: {
         github_id: Number(githubUser.id),
@@ -47,7 +46,6 @@ export async function GET(request: Request): Promise<Response> {
 
   const userId = generateId(15);
 
-// Replace this with your own DB client.
   await prisma.user.create({
     data: {
       id: userId,

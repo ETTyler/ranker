@@ -7,8 +7,9 @@ import { useEffect, useState } from 'react'
 import { cookies } from 'next/headers'
 import { PrismaClient, Prisma } from '@prisma/client'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import Search from './search'
 
-export default  function Coasters( {userID}: {userID: string}) {
+export default function Coasters( {userID}: {userID: string}) {
   const [coasters, setCoasters] = useState<any[]>([])
 
   const coasterRankings  = async (userID: string) => {
@@ -32,15 +33,6 @@ export default  function Coasters( {userID}: {userID: string}) {
   }
   , [userID])
 
-  // const prisma = new PrismaClient()
-
-  // const res = await prisma.coasters.findFirst({
-  //   where: {
-  //     userId: userID 
-  //   }
-  // })
-
-  // const coasters = res?.topTen
 
   // Updates an array showing the order the user has put the coasters in, save this to the database
 
@@ -61,7 +53,8 @@ export default  function Coasters( {userID}: {userID: string}) {
 
   return (
     <>
-      <DragDropContext onDragEnd={onDragEnd}>
+    <Search userID={userID} setCoasters={setCoasters} />
+    <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
         {(provided) => (
           <Stack gap="sm" {...provided.droppableProps} ref={provided.innerRef}>

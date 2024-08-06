@@ -9,7 +9,6 @@ interface Props {
 
 export default function Coaster({coaster, rank}: Props) {
   const [details, setDetails] = useState<any>()
-  console.log(rank)
 
   const coasterInfo  = async (coaster: string) => {
     try {
@@ -39,24 +38,6 @@ export default function Coaster({coaster, rank}: Props) {
   }, [coaster])
   
   if (!details) return <div>Loading...</div>
-
-  // const api = 'https://captaincoaster.com/api/'
-  // const key = process.env.API_KEY
-  //   const req = await fetch(`${api}coasters/${coaster}`, {
-  //     headers: {
-  //       Authorization: key || '',
-  //     },
-  //   })
-  //   const coasterData = await req.json()
-  //   const details  =  {
-  //     name: coasterData.name,
-  //     park: coasterData.park.name,
-  //     material: coasterData.materialType.name,
-  //     manufacturer: coasterData.manufacturer.name,
-  //     model: coasterData.model.name,
-  //     rank: coasterData.rank,
-  //     image: coasterData.mainImage.path
-  //   }
   
   return (
     <>

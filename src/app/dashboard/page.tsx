@@ -18,7 +18,6 @@ export default async function Home() {
     <>
       <HeaderMenu />
       <Dash>
-        <Search />
         <Coasters userID={user ? user.id : ''} />
       </Dash>
     </>

@@ -7,21 +7,21 @@ export async function GET(request: NextRequest) {
   const key = process.env.API_KEY
   let response = {}
 
-    const req = await fetch(`${api}coasters/${coasterID}`, {
-      headers: {
-        Authorization: key || '',
-      },
-    })
-    const coasterData = await req.json()
-    response  =  {
-      name: coasterData.name,
-      park: coasterData.park.name,
-      material: coasterData.materialType.name,
-      manufacturer: coasterData.manufacturer.name,
-      model: coasterData.model.name,
-      rank: coasterData.rank,
-      image: coasterData.mainImage.path
-    }
+  const req = await fetch(`${api}coasters/${coasterID}`, {
+    headers: {
+      Authorization: key || '',
+    },
+  })
+  const coasterData = await req.json()
+  response  =  {
+    name: coasterData.name,
+    park: coasterData.park.name,
+    material: coasterData.materialType.name,
+    manufacturer: coasterData.manufacturer.name,
+    model: coasterData.model === undefined ? coasterData.manufacturer.name : coasterData.model.name,
+    rank: coasterData.rank,
+    image: coasterData.mainImage.path
+  }
  
   return NextResponse.json({response})
 }

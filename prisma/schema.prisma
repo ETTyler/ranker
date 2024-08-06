@@ -32,6 +32,6 @@ model Session {
 model Coasters {
   id     Int    @id @default(autoincrement())
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  userId String @unique
   topTen Json
 }
