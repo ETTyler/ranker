@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
     },
   })
 
+  // calculates the rank of the coaster being added by appending it to the end or setting to 1
   const rank = Array.isArray(userCoasters?.topTen) ? userCoasters?.topTen.length + 1 : 1;
 
   const updatedList = Array.isArray(userCoasters?.topTen) ? [...userCoasters.topTen, {
@@ -69,13 +70,7 @@ export async function POST(request: NextRequest) {
     }
   })
   
-  const coasters = await prisma.coasters.findFirst({
-    where: {
-      userId: userID 
-    }
-  })
-
-  const response = coasters?.topTen
+  const response = updatedList
 
   return NextResponse.json({ response })
 }
