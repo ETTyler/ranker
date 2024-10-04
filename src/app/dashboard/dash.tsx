@@ -1,5 +1,5 @@
 'use client'
-import { Input, Stack, Autocomplete } from '@mantine/core'
+import { Stack } from '@mantine/core'
 
 export default function Dash({
     children,
@@ -13,7 +13,6 @@ export default function Dash({
         p={20}
         align="center"
         justify="flex-start"
-        gap="lg"
       >
         {children}
       </Stack>

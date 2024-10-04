@@ -12,7 +12,7 @@ export default function CoasterUI({details, rank}: Props) {
   const isMobile = useMediaQuery(`(max-width: 768px)`);
   return (
     <>
-    <Container fluid>
+    <Container pb={20} fluid>
     <Card shadow='lg' padding="lg" radius="md" withBorder>
       <Group justify='space-between' wrap='nowrap'>
         <Group wrap='nowrap' gap="5px">
@@ -42,7 +42,7 @@ export default function CoasterUI({details, rank}: Props) {
           src={`https://pictures.captaincoaster.com/1440x1440/${details.image}`}
           alt={details.name}
           fit='cover'
-          h={isMobile ? 200 : 400}
+          h={isMobile ? 200 : 300}
         />
       </Card.Section>
     </Card>

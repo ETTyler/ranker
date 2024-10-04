@@ -57,6 +57,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
     })
   }, [value])
     
+  // add media query to this to update seach bar length
   return (
     <Container w="100%">
       <Group justify='center'>
