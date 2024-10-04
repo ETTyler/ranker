@@ -12,14 +12,14 @@ export default function CoasterUI({details, rank}: Props) {
   const isMobile = useMediaQuery(`(max-width: 768px)`);
   return (
     <>
-    <Container pb={20} fluid>
+    <Container pb={20} style={{cursor:'grab'}} fluid>
     <Card shadow='lg' padding="lg" radius="md" withBorder>
       <Group justify='space-between' wrap='nowrap'>
         <Group wrap='nowrap' gap="5px">
           <Badge size={isMobile ? 'md' : 'lg'} color="blue" mb={8}>#{rank} </Badge>
         </Group>
         <Group wrap='nowrap'>
-        <IconGripVertical size={23}/>
+        <IconGripVertical size={23} />
           <Tooltip label="Remove coaster" position='bottom'>
             <ActionIcon 
               color='red'

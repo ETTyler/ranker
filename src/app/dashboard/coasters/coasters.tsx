@@ -56,10 +56,10 @@ export default function Coasters( {userID}: {userID: string}) {
     <>
     <Stack gap="lg">
     <Search userID={userID} setCoasters={setCoasters} />
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd} >
       <Droppable droppableId="droppable">
         {(provided) => (
-          <Stack gap={0} {...provided.droppableProps} ref={provided.innerRef}>
+          <div {...provided.droppableProps} ref={provided.innerRef}>
             {coasters.map((coaster, index) => (
               <Draggable key={coaster.rank} draggableId={coaster.rank.toString()} index={index}>
                 {(provided) => (
@@ -74,7 +74,7 @@ export default function Coasters( {userID}: {userID: string}) {
               </Draggable>
             ))}
             {provided.placeholder}
-          </Stack>
+          </div>
         )}
       </Droppable>
     </DragDropContext>
