@@ -48,6 +48,20 @@ export async function POST(request: NextRequest) {
     },
   })
 
+  if (userCoasters === null) {
+    const newCoasterList = await prisma.coasters.create({
+      data: {
+        userId: userID,
+        topTen: [{
+          "id": Number(coasterID),
+          "rank": 1
+        }]
+      }
+    })
+    const response = newCoasterList.topTen
+    return NextResponse.json({ response })
+  }
+
   // calculates the rank of the coaster being added by appending it to the end or setting to 1
   const rank = Array.isArray(userCoasters?.topTen) ? userCoasters?.topTen.length + 1 : 1;
 
@@ -61,7 +75,7 @@ export async function POST(request: NextRequest) {
   }] as Prisma.JsonArray
 
 
-  const updateCoasters = await prisma.coasters.update({
+  const updateCoasters = await prisma.coasters.updateMany({
     where: {
       userId: userID
     },

@@ -34,6 +34,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
   }
 
   const addCoaster = async (coaster: string) => {
+    setValue('')
     const coasterID = coaster.split('#')[1].trim()
     try {
       const res = await fetch(`/dashboard/coasters/api/search`, {

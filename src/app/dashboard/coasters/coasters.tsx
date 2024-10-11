@@ -50,7 +50,7 @@ export default function Coasters( {userID}: {userID: string}) {
     setCoasters(items);
   };
 
-  if (!coasters) return <div></div>
+  if (!coasters) return <Search userID={userID} setCoasters={setCoasters} />
 
   return (
     <>

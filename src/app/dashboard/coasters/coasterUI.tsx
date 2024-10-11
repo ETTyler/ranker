@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function CoasterUI({details, rank}: Props) {
-  const isMobile = useMediaQuery(`(max-width: 768px)`);
+  const isMobile = useMediaQuery(`(max-width: 800px)`);
   return (
     <>
     <Container pb={20} style={{cursor:'grab'}} fluid>

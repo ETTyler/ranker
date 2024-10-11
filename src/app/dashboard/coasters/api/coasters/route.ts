@@ -12,6 +12,7 @@ export async function GET(request: NextRequest) {
       Authorization: key || '',
     },
   })
+  
   const coasterData = await req.json()
   response  =  {
     name: coasterData.name,
