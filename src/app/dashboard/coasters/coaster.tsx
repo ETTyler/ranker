@@ -5,9 +5,11 @@ import CoasterUI from './coasterUI'
 interface Props {
   coaster: string
   rank: number
+  userID: string
+  setCoasters: any
 }
 
-export default function Coaster({coaster, rank}: Props) {
+export default function Coaster({coaster, rank, userID, setCoasters}: Props) {
   const [details, setDetails] = useState<any>()
 
   const coasterInfo  = async (coaster: string) => {
@@ -41,7 +43,7 @@ export default function Coaster({coaster, rank}: Props) {
   
   return (
     <>
-      <CoasterUI details={details} rank={rank} />
+      <CoasterUI details={details} rank={rank} userID={userID} setCoasters={setCoasters}/>
     </>
   )
 }

@@ -6,9 +6,28 @@ import { IconGripVertical, IconTrash} from '@tabler/icons-react';
 interface Props {
   details: any
   rank: number
+  userID: string
+  setCoasters: any
 }
 
-export default function CoasterUI({details, rank}: Props) {
+export default function CoasterUI({details, rank, userID, setCoasters}: Props) {
+  const removeCoaster = async () => {
+    try {
+      const res = await fetch(`/dashboard/coasters/api/remove`, {
+        method: 'POST',
+        body: JSON.stringify({
+          userID: userID,
+          coasterID: details.id
+        }),
+      })
+      const data = await res.json()
+      setCoasters(data.response)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
   const isMobile = useMediaQuery(`(max-width: 800px)`);
   return (
     <>
@@ -26,6 +45,7 @@ export default function CoasterUI({details, rank}: Props) {
               size="input-xs" 
               variant="filled" 
               radius="md"
+              onClick={() => removeCoaster()}
             >
               <IconTrash />
             </ActionIcon>

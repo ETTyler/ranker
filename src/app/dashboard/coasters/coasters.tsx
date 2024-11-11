@@ -68,7 +68,7 @@ export default function Coasters( {userID}: {userID: string}) {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <Coaster key={coaster.rank} coaster={coaster.id} rank={coaster.rank}/>
+                    <Coaster key={coaster.rank} coaster={coaster.id} rank={coaster.rank} userID={userID} setCoasters={setCoasters} />
                   </div>
                 )}
               </Draggable>
