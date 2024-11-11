@@ -3,7 +3,7 @@
 import { Autocomplete, ActionIcon, Group, TextInput, Container } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { IconPlus } from '@tabler/icons-react';
-
+import { notifications } from '@mantine/notifications';
 
 export default function Search({userID, setCoasters}: {userID: string, setCoasters: any}) {
   const [value, setValue] = useState('')
@@ -11,7 +11,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
   const [searchResults, setSearchResults] = useState([])
 
   const coasterSearch  = async (coaster: string) => {
-    if (coaster.length < 3) return {response: []}
+    if (coaster.length < 1) return {response: []}
     try {
       const res = await fetch(`/dashboard/coasters/api/search?coaster=${coaster}`)
       const data = await res.json()
@@ -75,7 +75,14 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
           variant="filled" 
           radius="md"
           disabled={selected}
-          onClick={() => addCoaster(value)}
+          onClick={() => {
+            addCoaster(value);
+            notifications.show({
+              title: `${value} added to list`,
+              message: 'Rearrange list',
+            })
+          }
+          }
         >
         <IconPlus />
         </ActionIcon>

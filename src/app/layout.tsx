@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+import { Notifications } from '@mantine/notifications';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 
@@ -23,7 +25,10 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={inter.className}>
-        <MantineProvider>{children}</MantineProvider>
+        <MantineProvider defaultColorScheme='dark'>
+          <Notifications />
+          {children}
+        </MantineProvider>
       </body>
     </html>
   )
