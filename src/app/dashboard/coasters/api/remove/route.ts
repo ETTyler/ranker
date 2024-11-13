@@ -30,8 +30,6 @@ export async function POST(request: NextRequest) {
     ...item,
     rank: index + 1,
   }))
-  
-  console.log(updatedItems)
 
   const updateCoasters = await prisma.coasters.updateMany({
     where: {

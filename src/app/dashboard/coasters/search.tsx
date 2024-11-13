@@ -1,8 +1,8 @@
 'use client';
 
-import { Autocomplete, ActionIcon, Group, TextInput, Container } from '@mantine/core'
+import { Autocomplete, ActionIcon, Group, Container, Tooltip } from '@mantine/core'
 import { useEffect, useState } from 'react'
-import { IconPlus } from '@tabler/icons-react';
+import { IconCheck, IconPlus } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 
 export default function Search({userID, setCoasters}: {userID: string, setCoasters: any}) {
@@ -70,6 +70,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
           onChange={setValue}
           onOptionSubmit={() => setSelected(false)}
         />
+        <Tooltip label="Add to list" position='bottom'>
         <ActionIcon 
           size="input-sm" 
           variant="filled" 
@@ -78,14 +79,16 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
           onClick={() => {
             addCoaster(value);
             notifications.show({
-              title: `${value} added to list`,
-              message: 'Rearrange list',
+              title: `List updated`,
+              message: `${value.split('(')[0].trim()} has been added to your list`,
+              icon: <IconCheck />,
             })
           }
           }
         >
         <IconPlus />
         </ActionIcon>
+        </Tooltip>
       </Group>
     </Container>
   )

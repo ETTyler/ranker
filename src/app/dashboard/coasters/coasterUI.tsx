@@ -1,7 +1,8 @@
 'use client'
 import { Stack, Paper, Text, Image, Card, Flex, Badge, Button, Group, Container, ActionIcon, Tooltip} from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks';
-import { IconGripVertical, IconTrash} from '@tabler/icons-react';
+import { IconCheck, IconGripVertical, IconTrash} from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
 
 interface Props {
   details: any
@@ -45,7 +46,14 @@ export default function CoasterUI({details, rank, userID, setCoasters}: Props) {
               size="input-xs" 
               variant="filled" 
               radius="md"
-              onClick={() => removeCoaster()}
+              onClick={() => {
+                removeCoaster()
+                notifications.show({
+                  title: `List updated`,
+                  message: `${details.name} has been removed from your list`,
+                  icon: <IconCheck />,
+                })
+              }}
             >
               <IconTrash />
             </ActionIcon>
@@ -63,6 +71,7 @@ export default function CoasterUI({details, rank, userID, setCoasters}: Props) {
           alt={details.name}
           fit='cover'
           h={isMobile ? 200 : 300}
+          w={isMobile ? 300 : 500}
         />
       </Card.Section>
     </Card>
