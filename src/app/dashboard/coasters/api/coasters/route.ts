@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   response  =  {
     name: coasterData.name,
     park: coasterData.park.name,
-    material: coasterData.materialType.name,
+    //material: coasterData.materialType.name
     manufacturer: coasterData.manufacturer.name,
     model: coasterData.model === undefined ? coasterData.manufacturer.name : coasterData.model.name,
     rank: coasterData.rank,
