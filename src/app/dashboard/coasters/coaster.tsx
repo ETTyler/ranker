@@ -7,9 +7,10 @@ interface Props {
   rank: number
   userID: string
   setCoasters: any
+  listeners?: any
 }
 
-export default function Coaster({coaster, rank, userID, setCoasters}: Props) {
+export default function Coaster({coaster, rank, userID, setCoasters, listeners}: Props) {
   const [details, setDetails] = useState<any>()
 
   const coasterInfo  = async (coaster: string) => {
@@ -43,7 +44,7 @@ export default function Coaster({coaster, rank, userID, setCoasters}: Props) {
   
   return (
     <>
-      <CoasterUI details={details} rank={rank} userID={userID} setCoasters={setCoasters}/>
+      <CoasterUI details={details} rank={rank} userID={userID} setCoasters={setCoasters} listeners={listeners}/>
     </>
   )
 }

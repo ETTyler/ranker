@@ -9,9 +9,10 @@ interface Props {
   rank: number
   userID: string
   setCoasters: any
+  listeners?: any
 }
 
-export default function CoasterUI({details, rank, userID, setCoasters}: Props) {
+export default function CoasterUI({details, rank, userID, setCoasters, listeners}: Props) {
   const removeCoaster = async () => {
     try {
       const res = await fetch(`/dashboard/coasters/api/remove`, {
@@ -48,14 +49,15 @@ export default function CoasterUI({details, rank, userID, setCoasters}: Props) {
           <Badge size={isMobile ? 'md' : 'lg'} color="blue" mb={8}>#{rank} </Badge>
         </Group>
         <Group wrap='nowrap'>
-        <IconGripVertical size={23} />
+        <IconGripVertical size={23} {...(isMobile ? listeners : {})} style={{touchAction: 'none'}} />
           <Tooltip label="Remove coaster" position='bottom'>
             <ActionIcon 
               color='red'
               size="input-xs" 
               variant="filled" 
               radius="md"
-              onClick={() => {
+              onClick={(event) => {
+                event.stopPropagation()
                 removeCoaster()
                 notifications.show({
                   title: `List updated`,
