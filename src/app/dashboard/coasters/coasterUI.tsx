@@ -29,6 +29,15 @@ export default function CoasterUI({details, rank, userID, setCoasters}: Props) {
     }
   }
 
+  let image
+
+  if (details.image) {
+    image = `https://pictures.captaincoaster.com/1440x1440/${details.image}`
+  }
+  else { 
+    image = 'https://dummyimage.com/600x400/ffffff/000000&text=No+Image+Available'
+  }
+
   const isMobile = useMediaQuery(`(max-width: 800px)`);
   return (
     <>
@@ -67,7 +76,7 @@ export default function CoasterUI({details, rank, userID, setCoasters}: Props) {
       </Text>
       <Card.Section withBorder>
       <Image
-          src={`https://pictures.captaincoaster.com/1440x1440/${details.image}`}
+          src={image}
           alt={details.name}
           fit='cover'
           h={isMobile ? 200 : 300}
