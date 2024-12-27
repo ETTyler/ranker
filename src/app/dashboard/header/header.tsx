@@ -4,10 +4,7 @@ import {
   Box,
 } from '@mantine/core';
 import classes from './header.module.css';
-import { lucia, validateRequest } from "../../../auth";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-import { log } from 'console';
 import { getCurrentSession, invalidateSession, deleteSessionTokenCookie } from '@/auth/session';
 
 interface ActionResult {

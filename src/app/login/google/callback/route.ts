@@ -1,5 +1,5 @@
-import { generateSessionToken, createSession, setSessionTokenCookie } from "../../../../../src/auth/session";
-import { google } from "../../../../../src/auth/oauth";
+import { generateSessionToken, createSession, setSessionTokenCookie } from "@/auth/session";
+import { google } from "@/auth/oauth";
 import { cookies } from "next/headers";
 import { decodeIdToken } from "arctic"
 import type { OAuth2Tokens } from "arctic";

@@ -3,13 +3,11 @@
 import { HeaderMenu } from '../dashboard/header/header'
 import Dash from '../dashboard/dash'
 import Coasters from './coasters/coasters'
-import { lucia, validateRequest } from '../../auth'
 import { redirect } from "next/navigation";
-import { getCurrentSession } from "../../../src/auth/session";
+import { getCurrentSession } from "@/auth/session";
 
 export default async function Home() {
   const { user } = await getCurrentSession();
-
   return (
     <div style={{
       height: '100vh',
