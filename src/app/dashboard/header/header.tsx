@@ -8,6 +8,7 @@ import { lucia, validateRequest } from "../../../auth";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { log } from 'console';
+import { getCurrentSession, invalidateSession, deleteSessionTokenCookie } from '@/auth/session';
 
 interface ActionResult {
   error: string | null;
@@ -15,17 +16,15 @@ interface ActionResult {
 
 async function logout(): Promise<ActionResult> {
   "use server";
-  const {session} = await validateRequest();
+  const {session} = await getCurrentSession();
   if (!session) {
     return {
       error: "You are not logged in"
     }
   }
 
-  await lucia.invalidateSession(session.id)
-
-  const sessionCookie = lucia.createBlankSessionCookie()
-  cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
+  await invalidateSession(session.id)
+  await deleteSessionTokenCookie()
   return redirect("/dashboard")
 }
 
@@ -42,14 +41,14 @@ const Logout = ( {user}: {user: {username: string}} ) => {
 
 const Login = () => {
   return (
-    <a href="/login/github">
+    <a href="/login/google">
       <Button>Log in</Button>
     </a>
   )
 }
   
 export async function HeaderMenu() {
-  const { user } = await validateRequest();
+  const { user } = await getCurrentSession();
 		return (
       <Box pb={0}>
       <header className={classes.header}>

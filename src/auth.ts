@@ -1,14 +1,26 @@
 import { DatabaseUser, Lucia } from "lucia";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { PrismaClient } from "@prisma/client";
-import { GitHub } from "arctic";
+import { GitHub, Google } from "arctic";
 import { cookies } from "next/headers";
 import { cache } from "react";
 import type { Session, User } from "lucia";
 
 const client = new PrismaClient();
 const adapter = new PrismaAdapter(client.session, client.user);
-export const github = new GitHub(process.env.GITHUB_CLIENT_ID!, process.env.GITHUB_CLIENT_SECRET!);
+
+export const github = new GitHub(
+	process.env.GITHUB_CLIENT_ID!,
+	process.env.GITHUB_CLIENT_SECRET!,
+	"http://localhost:3000/login/github/callback"
+);
+
+export const google = new Google(
+	process.env.GOOGLE_CLIENT_ID!,
+	process.env.GOOGLE_CLIENT_SECRET!,
+	"http://localhost:3000/login/google/callback"
+);
+
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {
