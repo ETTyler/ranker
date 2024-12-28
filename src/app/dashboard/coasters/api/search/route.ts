@@ -3,6 +3,7 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+// This route is used to search for coasters by name through the external API and returns the results
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const coaster = searchParams.get('coaster')
@@ -14,7 +15,8 @@ export async function GET(request: NextRequest) {
     headers: {
       Authorization: key || '', 
     },
-  });
+  })
+
   if (res.status !== 200) {
     return false
   }
@@ -37,6 +39,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ response })
 }
 
+// This route is used to add a coaster to the user's top ten list
 export async function POST(request: NextRequest) {
   const body = await request.json()
   const userID = body.userID
@@ -60,6 +63,15 @@ export async function POST(request: NextRequest) {
     })
     const response = newCoasterList.topTen
     return NextResponse.json({ response })
+  }
+
+  const isCoasterInList = Array.isArray(userCoasters?.topTen) && userCoasters.topTen.some((coaster: any) => coaster.id === Number(coasterID))
+
+  if (isCoasterInList) {
+    return NextResponse.json(
+      { error: 'Coaster already in list' },
+      { status: 400 }
+    )
   }
 
   // calculates the rank of the coaster being added by appending it to the end or setting to 1

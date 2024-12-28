@@ -10,6 +10,7 @@ import { useMediaQuery } from '@mantine/hooks'
 
 export default function Coasters( {userID}: {userID: string}) {
   const [coasters, setCoasters] = useState<any[]>([])
+  const [width, setWidth] = useState(0)
 
   const coasterRankings = async (userID: string) => {
     try {
@@ -29,6 +30,10 @@ export default function Coasters( {userID}: {userID: string}) {
     coasterRankings(userID).then(data => {
       setCoasters(data.response)
     })
+    setWidth(window.innerWidth)
+    const handleResize = () => setWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }
   , [userID])
 
@@ -74,6 +79,10 @@ export default function Coasters( {userID}: {userID: string}) {
     useSensor(TouchSensor)
   )
 
+  const isMobile  = useMediaQuery(`(max-width: 1651px)`);
+  const itemsInRow = Math.floor(width / 534)
+  const itemsInRowMobile = Math.floor(width / 350)
+
   if (!coasters) return <Search userID={userID} setCoasters={setCoasters} />;
 
   return (
@@ -86,14 +95,16 @@ export default function Coasters( {userID}: {userID: string}) {
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 flexWrap: 'wrap',
+                maxWidth: `${ isMobile ? itemsInRowMobile * 334 : itemsInRow * 534}px`,
               }}
             >
               {coasters.map((coaster, index) => (
                 <SortableItem key={coaster.rank} coaster={coaster} index={index} userID={userID} setCoasters={setCoasters} />
               ))}
             </div>
+            
           </SortableContext>
         </DndContext>
       </Stack>

@@ -39,11 +39,11 @@ export default function CoasterUI({details, rank, userID, setCoasters, listeners
     image = 'https://dummyimage.com/600x400/ffffff/000000&text=No+Image+Available'
   }
 
-  const isMobile = useMediaQuery(`(max-width: 800px)`);
+  const isMobile = useMediaQuery(`(max-width: 1651px)`);
   return (
     <>
     <Container pb={20} style={{cursor:'grab'}} fluid>
-    <Card shadow='lg' padding="lg" radius="md" withBorder>
+    <Card shadow='lg' padding="lg" radius="md" withBorder w={isMobile ? 300 : 500} h={isMobile ? 335 : 460}>
       <Group justify='space-between' wrap='nowrap'>
         <Group wrap='nowrap' gap="5px">
           <Badge size={isMobile ? 'md' : 'lg'} color="blue" mb={8}>#{rank} </Badge>
@@ -63,6 +63,7 @@ export default function CoasterUI({details, rank, userID, setCoasters, listeners
                   title: `List updated`,
                   message: `${details.name} has been removed from your list`,
                   icon: <IconCheck />,
+                  color: 'green',
                 })
               }}
             >

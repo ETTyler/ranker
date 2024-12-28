@@ -2,8 +2,9 @@
 
 import { Autocomplete, ActionIcon, Group, Container, Tooltip } from '@mantine/core'
 import { useEffect, useState } from 'react'
-import { IconCheck, IconPlus } from '@tabler/icons-react';
+import { IconCheck, IconPlus, IconX } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
+import { useMediaQuery } from '@mantine/hooks';
 
 export default function Search({userID, setCoasters}: {userID: string, setCoasters: any}) {
   const [value, setValue] = useState('')
@@ -14,17 +15,6 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
     if (coaster.length < 1) return {response: []}
     try {
       const res = await fetch(`/dashboard/coasters/api/search?coaster=${coaster}`)
-      const data = await res.json()
-      return data
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
-
-  const coasterDetails  = async (coasterID: string) => {
-    try {
-      const res = await fetch(`/dashboard/coasters/api/coastersv2?coaster=${coasterID}`)
       const data = await res.json()
       return data
     }
@@ -45,7 +35,23 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
         }),
       })
       const data = await res.json()
-      setCoasters(data.response)
+      if (data.error) {
+        notifications.show({
+          title: `Error`,
+          message: `${coaster.split('(')[0].trim()} is already in your list`,
+          icon: <IconX />,
+          color: 'red',
+        })
+      }
+      else {
+        notifications.show({
+          title: `List updated`,
+          message: `${value.split('(')[0].trim()} has been added to your list`,
+          icon: <IconCheck />,
+          color: 'green',
+        })
+        setCoasters(data.response)
+      }
     }
     catch (err) {
       console.log(err)
@@ -58,12 +64,13 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
     })
   }, [value])
     
-  // add media query to this to update seach bar length
+  const isMobile = useMediaQuery(`(max-width: 800px)`);
+
   return (
     <Container w="100%">
       <Group justify='center'>
         <Autocomplete 
-          w="70%"
+          w={isMobile ? '80%' : '50%'}
           placeholder="Search for a coaster"   
           data = {searchResults}
           value={value}
@@ -78,11 +85,6 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
           disabled={selected}
           onClick={() => {
             addCoaster(value);
-            notifications.show({
-              title: `List updated`,
-              message: `${value.split('(')[0].trim()} has been added to your list`,
-              icon: <IconCheck />,
-            })
           }
           }
         >
