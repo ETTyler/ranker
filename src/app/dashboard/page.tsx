@@ -10,7 +10,7 @@ export default async function Home() {
   const { user } = await getCurrentSession();
   return (
     <div style={{
-      height: '100vh',
+      background: 'var(--mantine-color-body)'
     }}>
       <HeaderMenu />
       <Dash>

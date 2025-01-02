@@ -50,7 +50,7 @@ export async function HeaderMenu() {
       <Box pb={0}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%" px={20}>
-          <a href='#' className={classes.logo}>
+          <a href='/' className={classes.logo}>
             Ranker
           </a>
           <Group h="100%" gap={0}>
