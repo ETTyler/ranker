@@ -92,8 +92,7 @@ export default function Coasters( {userID}: {userID: string}) {
   return (
     <>
       <Stack gap="lg" justify="center">
-        <Search userID={userID} setCoasters={setCoasters} />
-        <CopyButton value={`${url}/share/${userID}`}>
+      <CopyButton value={`${url}/share/${userID}`}>
           {({ copied, copy }) => (
             <Center>
               <Button color={copied ? 'teal' : 'blue'} onClick={copy} >
@@ -103,6 +102,7 @@ export default function Coasters( {userID}: {userID: string}) {
             </Center>
           )}
         </CopyButton>
+        <Search userID={userID} setCoasters={setCoasters} />
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={coasters.map((coaster) => coaster.rank)}>
             <div
