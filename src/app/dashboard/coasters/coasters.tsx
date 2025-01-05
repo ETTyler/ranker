@@ -1,16 +1,19 @@
 'use client'
 import Coaster from './coaster' 
-import { Input, Stack, Autocomplete, Container } from '@mantine/core'
+import { CopyButton, Stack, Button, Center } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import Search from './search'
 import { DndContext, closestCenter, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useMediaQuery } from '@mantine/hooks'
+import { IconShare3 } from '@tabler/icons-react';
+import { usePathname } from 'next/navigation'
 
 export default function Coasters( {userID}: {userID: string}) {
   const [coasters, setCoasters] = useState<any[]>([])
   const [width, setWidth] = useState(0)
+  const [url, setUrl] = useState('')
 
   const coasterRankings = async (userID: string) => {
     try {
@@ -30,6 +33,7 @@ export default function Coasters( {userID}: {userID: string}) {
     coasterRankings(userID).then(data => {
       setCoasters(data.response)
     })
+    setUrl(window.location.origin)
     setWidth(window.innerWidth)
     const handleResize = () => setWidth(window.innerWidth)
     window.addEventListener('resize', handleResize)
@@ -89,6 +93,16 @@ export default function Coasters( {userID}: {userID: string}) {
     <>
       <Stack gap="lg" justify="center">
         <Search userID={userID} setCoasters={setCoasters} />
+        <CopyButton value={`${url}/share/${userID}`}>
+          {({ copied, copy }) => (
+            <Center>
+              <Button color={copied ? 'teal' : 'blue'} onClick={copy} >
+                {copied ? 'Copied url' : 'Share your list'} 
+                <IconShare3 size={16} style={{marginLeft: '5px'}} />
+              </Button>
+            </Center>
+          )}
+        </CopyButton>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={coasters.map((coaster) => coaster.rank)}>
             <div
@@ -104,7 +118,6 @@ export default function Coasters( {userID}: {userID: string}) {
                 <SortableItem key={coaster.rank} coaster={coaster} index={index} userID={userID} setCoasters={setCoasters} />
               ))}
             </div>
-            
           </SortableContext>
         </DndContext>
       </Stack>

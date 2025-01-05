@@ -22,7 +22,7 @@ async function logout(): Promise<ActionResult> {
 
   await invalidateSession(session.id)
   await deleteSessionTokenCookie()
-  return redirect("/dashboard")
+  return redirect("/")
 }
 
 const Logout = ( {user}: {user: {username: string}} ) => { 
