@@ -43,7 +43,7 @@ export default function CoasterUI({details, rank, userID, setCoasters, listeners
   return (
     <>
     <Container pb={20} style={{cursor:'grab'}} fluid>
-    <Card shadow='lg' padding="lg" radius="md" withBorder w={isMobile ? 300 : 500} h={isMobile ? 335 : 460}>
+    <Card shadow='lg' padding="lg" radius="md" withBorder w={isMobile ? 300 : 500} h={isMobile ? 330 : 460}>
       <Group justify='space-between' wrap='nowrap'>
         <Group wrap='nowrap' gap="5px">
           <Badge size={isMobile ? 'md' : 'lg'} color="blue" mb={8}>#{rank} </Badge>

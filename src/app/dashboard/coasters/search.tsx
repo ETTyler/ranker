@@ -1,6 +1,6 @@
 'use client';
 
-import { Autocomplete, ActionIcon, Group, Container, Tooltip } from '@mantine/core'
+import { Autocomplete, ActionIcon, Group, Container, Tooltip, Loader, Center } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { IconCheck, IconPlus, IconX } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
@@ -10,6 +10,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
   const [value, setValue] = useState('')
   const [selected, setSelected] = useState(true)
   const [searchResults, setSearchResults] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const coasterSearch  = async (coaster: string) => {
     if (coaster.length < 1) return {response: []}
@@ -26,6 +27,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
   const addCoaster = async (coaster: string) => {
     setValue('')
     const coasterID = coaster.split('#')[1].trim()
+    setLoading(true)
     try {
       const res = await fetch(`/dashboard/coasters/api/search`, {
         method: 'POST',
@@ -51,6 +53,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
           color: 'green',
         })
         setCoasters(data.response)
+        setLoading(false)
       }
     }
     catch (err) {
@@ -64,13 +67,13 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
     })
   }, [value])
     
-  const isMobile = useMediaQuery(`(max-width: 800px)`);
+  const isMobile = useMediaQuery(`(max-width: 1100px)`);
 
   return (
     <Container w="100%">
       <Group justify='center'>
         <Autocomplete 
-          w={isMobile ? '80%' : '50%'}
+          w={isMobile ? '75%' : '50%'}
           placeholder="Search for a coaster"   
           data = {searchResults}
           value={value}
@@ -85,13 +88,17 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
           disabled={selected}
           onClick={() => {
             addCoaster(value);
-          }
-          }
+          }}
         >
         <IconPlus />
         </ActionIcon>
         </Tooltip>
       </Group>
+      {loading &&
+        <Center pt={10}>
+          <Loader />
+        </Center>
+      }
     </Container>
   )
 }
