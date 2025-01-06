@@ -67,13 +67,13 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
     })
   }, [value])
     
-  const isMobile = useMediaQuery(`(max-width: 1100px)`);
+  const isMobile = useMediaQuery(`(max-width: 1500px)`);
 
   return (
     <Container w="100%">
       <Group justify='center'>
         <Autocomplete 
-          w={isMobile ? '75%' : '50%'}
+          w={isMobile ? '75%' : '300px'}
           placeholder="Search for a coaster"   
           data = {searchResults}
           value={value}
@@ -93,12 +93,11 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
         <IconPlus />
         </ActionIcon>
         </Tooltip>
-      </Group>
-      {loading &&
-        <Center pt={10}>
+        {loading && 
           <Loader />
-        </Center>
-      }
+        }
+      </Group>
+
     </Container>
   )
 }
