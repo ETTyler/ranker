@@ -90,7 +90,7 @@ input {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: white;
   background-color: var(--mantine-color-body);
 }
 
