@@ -1,6 +1,5 @@
 'use client';
 
-import styles from './page.module.css'
 import Link from 'next/link'
 import { Container, Title, Image, Badge, Text, Button, Group, Stack, Grid, ThemeIcon, Box, Paper, rgba } from "@mantine/core";
 import { motion } from 'motion/react'

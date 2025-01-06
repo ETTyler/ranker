@@ -7,7 +7,7 @@ export async function GET(): Promise<Response> {
 	const codeVerifier = generateCodeVerifier();
 	const url = google.createAuthorizationURL(state, codeVerifier, ["openid", "profile"]);
 
-	const cookieStore = await cookies();
+	const cookieStore = cookies();
 	cookieStore.set("google_oauth_state", state, {
 		path: "/",
 		httpOnly: true,
