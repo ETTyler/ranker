@@ -19,8 +19,9 @@ export async function GET(request: NextRequest) {
   })
 
   if (res.status !== 200) {
-    return false
+    return NextResponse.json({ message: "Error" }, { status: 500 })
   }
+
   else {
     const data = await res.json()
     const initialResponse = data['hydra:member']
