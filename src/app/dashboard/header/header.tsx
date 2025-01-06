@@ -29,7 +29,7 @@ async function logout(): Promise<ActionResult> {
 const Logout = ( {user}: {user: {username: string}} ) => { 
   return (
     <>
-      <Text>{user.username}</Text>
+      <Text c='white'>{user.username}</Text>
       <form action={logout}>
         <Button type="submit">Log out</Button>
       </form>
@@ -52,7 +52,7 @@ export async function HeaderMenu() {
       <header className={classes.header}>
         <Group justify="space-between" h="100%" px={20}>
           <a href='/' className={classes.logo}>
-            <Text>Ranker</Text>
+            <Text c='white'>Ranker</Text>
           </a>
           <Group h="100%" gap={0}>
           </Group>

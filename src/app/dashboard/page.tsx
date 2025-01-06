@@ -8,6 +8,9 @@ import { getCurrentSession } from "@/auth/session";
 
 export default async function Home() {
   const { user } = await getCurrentSession();
+  if (!user) {
+    return redirect("/login/google")
+  }
   return (
     <div style={{
       background: 'var(--mantine-color-body)'
