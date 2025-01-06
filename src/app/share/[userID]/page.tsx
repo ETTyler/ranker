@@ -63,10 +63,11 @@ export default async function SharedRanking({ params }: { params: { userID: stri
       <Center>
         <Text size='xl'c='white' fw={600} mt={20} mb={10}>{username}&apos;s Ranking</Text>
       </Center>
+      <Center>
       <Flex 
         py={10}
         px='2%'
-        justify='center' 
+        justify='center'
         align='flex-start' 
         direction='row'
         wrap='wrap'
@@ -78,6 +79,7 @@ export default async function SharedRanking({ params }: { params: { userID: stri
           return <CoasterUI key={index} details={coasterDetails} rank={index+1} />;
         }))}
       </Flex>
+      </Center>
     </Container>
     </>
   );
