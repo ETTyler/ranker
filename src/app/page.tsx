@@ -13,13 +13,13 @@ export default function Home() {
     bg="var(--mantine-color-body)"
     px={0}
     py={{
-      base: 'calc(var(--mantine-spacing-lg) * 4)',
-      xs: 'calc(var(--mantine-spacing-lg) * 5)',
-      lg: 'calc(var(--mantine-spacing-lg) * 6)',
+      base: 'calc(var(--mantine-spacing-lg) * 2)',
+      xs: 'calc(var(--mantine-spacing-lg) * 2)',
+      lg: 'calc(var(--mantine-spacing-lg) * 3)',
     }}
     fluid
   >
-    <Container size="xl" px={0}>
+    <Container size="xl">
       <Stack align="center" gap="sm">
         <motion.div
           initial={{ opacity: 0.0 }}

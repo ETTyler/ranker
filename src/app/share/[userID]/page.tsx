@@ -58,7 +58,6 @@ export default async function SharedRanking({ params }: { params: { userID: stri
 
   return (
     <>
-    <HeaderMenu />
     <Container fluid>
       <Center>
         <Text size='xl'c='white' fw={600} mt={20} mb={10}>{username}&apos;s Ranking</Text>

@@ -5,6 +5,7 @@ import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import { Notifications } from '@mantine/notifications';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { HeaderMenu } from './dashboard/header/header';
 
 import { createMantineTheme } from './lib/create-mantine-theme';
 
@@ -73,6 +74,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <MantineProvider defaultColorScheme='dark' theme={theme}>
           <Notifications />
+          <HeaderMenu />
           {children}
         </MantineProvider>
       </body>

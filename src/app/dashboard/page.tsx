@@ -15,7 +15,6 @@ export default async function Home() {
     <div style={{
       background: 'var(--mantine-color-body)'
     }}>
-      <HeaderMenu />
       <Dash>
         <Coasters userID={user ? user.id : ''} />
       </Dash>
