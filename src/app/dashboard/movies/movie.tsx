@@ -47,17 +47,17 @@ export default function Movie({item, rank, userID, setItems, listeners}: Props) 
   return (
     <>
         <Container pb={20} style={{cursor:'grab'}} fluid>
-        <Card shadow='lg' padding="sm" radius="md" withBorder>
+        <Card shadow='lg' padding="sm" radius="md" withBorder w={isMobile ? 300 : 500} >
           <Group wrap='nowrap'>
             <Image
               src={image}
               alt={item.title}
               fit='cover'
-              h={isMobile ? 100 : 150}
+              h={isMobile ? 105 : 150}
               radius={10}
             />
             <Flex direction='column' w='100%'>
-              <Flex direction='row' justify='space-between' align='flex-start'>  
+              <Flex direction='row' justify='space-between' align='flex-start' pt='2%' pr={10}>  
                 <div>
                   <Badge size={isMobile ? 'md' : 'lg'} color="blue" mb={8}>#{rank} </Badge>
                 </div>
