@@ -6,17 +6,20 @@ import { IconCheck, IconPlus, IconX } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import { useMediaQuery } from '@mantine/hooks';
 
-export default function Search({userID, setCoasters}: {userID: string, setCoasters: any}) {
+export default function Search({userID, setItems}: {userID: string, setItems: any}) {
   const [value, setValue] = useState('')
   const [selected, setSelected] = useState(true)
   const [searchResults, setSearchResults] = useState([])
   const [loading, setLoading] = useState(false)
 
-  const coasterSearch  = async (coaster: string) => {
-    if (coaster.length < 1) return {response: []}
+  const itemSearch  = async (item: string) => {
+    if (item.length < 1) return {response: []}
     try {
-      const res = await fetch(`/dashboard/coasters/api/search?coaster=${coaster}`)
+      const res = await fetch(`/dashboard/movies/api/search?movie=${item}`)
       const data = await res.json()
+      if (!data) {
+        return {response: []}
+      }
       return data
     }
     catch (err) {
@@ -24,27 +27,28 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
     }
   }
 
-  const addCoaster = async (coaster: string) => {
+  const addItem = async (item: string) => {
     setValue('')
-    const coasterID = coaster.split('#')[1].trim()
+    const itemID = item.split('#')[1].trim()
+    setSearchResults([])
     setLoading(true)
     try {
-      const res = await fetch(`/dashboard/coasters/api/search`, {
+      const res = await fetch(`/dashboard/movies/api/add`, {
         method: 'POST',
         body: JSON.stringify({
           userID: userID,
-          coasterID: coasterID
+          movieID: itemID
         }),
       })
       const data = await res.json()
       if (data.error) {
-        setLoading(false)
         notifications.show({
           title: `Error`,
-          message: `${coaster.split('(')[0].trim()} is already in your list`,
+          message: `${item.split('(')[0].trim()} is already in your list`,
           icon: <IconX />,
           color: 'red',
         })
+        setLoading(false)
       }
       else {
         notifications.show({
@@ -53,7 +57,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
           icon: <IconCheck />,
           color: 'green',
         })
-        setCoasters(data.response)
+        setItems(data.response)
         setLoading(false)
       }
     }
@@ -63,9 +67,20 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
   }
 
   useEffect(() => {
-    coasterSearch(value).then(data => {
-      setSearchResults(data.response.map((coaster: any) => coaster.value + " #" + coaster.id))
-    })
+    if (value) {
+      itemSearch(value).then(data => {
+        if (data.response) {
+          setSearchResults(data.response.map((item: any) => item.title + " #" + item.id));
+        } else {
+          setSearchResults([]);
+        }
+      }).catch(err => {
+        console.error(err);
+        setSearchResults([]);
+      });
+    } else {
+      setSearchResults([]);
+    }
   }, [value])
     
   const isMobile = useMediaQuery(`(max-width: 1500px)`);
@@ -75,7 +90,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
       <Group justify='center'>
         <Autocomplete 
           w={isMobile ? '75%' : '300px'}
-          placeholder="Search for a coaster"   
+          placeholder="Search for a movie"   
           data = {searchResults}
           value={value}
           onChange={setValue}
@@ -88,7 +103,7 @@ export default function Search({userID, setCoasters}: {userID: string, setCoaste
           radius="md"
           disabled={selected}
           onClick={() => {
-            addCoaster(value);
+            addItem(value);
           }}
         >
         <IconPlus />

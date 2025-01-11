@@ -6,7 +6,6 @@ import '@mantine/notifications/styles.css';
 import { Notifications } from '@mantine/notifications';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { HeaderMenu } from './dashboard/header/header';
-
 import { createMantineTheme } from './lib/create-mantine-theme';
 
 const meta: Metadata = {

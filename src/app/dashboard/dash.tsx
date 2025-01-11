@@ -12,7 +12,7 @@ export default function Dash({
         p={20}
         align="center"
         justify="flex-start"
-        
+        w='100vw'
       >
         {children}
       </Stack>
