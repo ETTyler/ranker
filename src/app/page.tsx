@@ -45,7 +45,7 @@ export default function Home() {
           viewport={{ once: true }}
         >
           <Text c="dimmed" fz="xl" ta="center" mb="md" style={{ textWrap: 'balance' }}>
-            Create a ranked list of your favourite rollercoasters.
+            Create ranked lists of different categories and share with your friends!
           </Text>
         </motion.div>
         <motion.div
@@ -72,7 +72,7 @@ export default function Home() {
           <Image 
             src={listPic.src} 
             width={100}
-            alt="Illustration of a person searching for a rollercoaster"
+            alt="Illustration of a person showing a list"
           />
       </motion.div>
     </Container>
