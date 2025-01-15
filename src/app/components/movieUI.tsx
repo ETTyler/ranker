@@ -8,29 +8,9 @@ import { notifications } from '@mantine/notifications';
 interface Props {
   item: any
   rank: number
-  userID: string
-  setItems: any
-  listeners?: any
 }
 
-export default function Movie({item, rank, userID, setItems, listeners}: Props) {
-  const removeItem = async () => {
-    try {
-      const res = await fetch(`/dashboard/movies/api/remove`, {
-        method: 'POST',
-        body: JSON.stringify({
-          userID: userID,
-          movieID: item.id
-        }),
-      })
-      const data = await res.json()
-      setItems(data.response)
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
-
+export default function Movie({item, rank}: Props) {
   let image
 
   if (item.poster_path) {
@@ -46,7 +26,7 @@ export default function Movie({item, rank, userID, setItems, listeners}: Props) 
   
   return (
     <>
-        <Container pb={10} style={{cursor:'grab'}} fluid>
+      <Container pb={10} fluid>
         <Card shadow='lg' padding={isMobile ? 'xs' : 'sm'} radius="md" withBorder w={isMobile ? '80vw' : 600} >
           <Group wrap='nowrap'>
             <Image
@@ -62,27 +42,6 @@ export default function Movie({item, rank, userID, setItems, listeners}: Props) 
                   <Badge size={isMobile ? 'sm' : 'lg'} color="blue" mb={isMobile ? 0 : 8}>#{rank} </Badge>
                 </div>
                 <Group gap='sm'>
-                  <IconGripVertical size={isMobile? 18 : 23} {...(isMobile ? listeners : {})} style={{touchAction: 'none'}} />
-                  <Tooltip label="Remove movie" position='bottom'>
-                    <ActionIcon 
-                      color='red'
-                      size={isMobile? 26 : "input-xs"}
-                      variant="filled" 
-                      radius="md"
-                      onClick={(event) => {
-                        event.stopPropagation()
-                        removeItem()
-                        notifications.show({
-                          title: `List updated`,
-                          message: `${item.title} has been removed from your list`,
-                          icon: <IconCheck />,
-                          color: 'green',
-                        })
-                      }}
-                    >
-                    <IconTrash size={isMobile? 20 : 23}/>
-                    </ActionIcon>
-                  </Tooltip>
                 </Group>
               </Flex>
             <div>
@@ -95,7 +54,7 @@ export default function Movie({item, rank, userID, setItems, listeners}: Props) 
             </Flex>
           </Group>
         </Card>
-        </Container>
-        </>
+      </Container>
+    </>
   )
 }

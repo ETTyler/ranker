@@ -82,10 +82,6 @@ export default function Movies( {userID}: {userID: string}) {
     useSensor(TouchSensor)
   )
 
-  const isMobile  = useMediaQuery(`(max-width: 1651px)`);
-  const itemsInRow = Math.floor(width / 534)
-  const itemsInRowMobile = Math.floor(width / 350)
-
   if (!items) return <Search userID={userID} setItems={setItems} />;
 
   return (
@@ -110,7 +106,6 @@ export default function Movies( {userID}: {userID: string}) {
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 flexWrap: 'wrap',
-                maxWidth: `${ isMobile ? itemsInRowMobile * 334 : itemsInRow * 534}px`,
               }}
             >
               {items.map((item, index) => (

@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     }
   })
 
-  let response = movies?.topTen
+  const response = movies?.topTen
  
   return NextResponse.json({ response })
 }

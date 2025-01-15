@@ -10,8 +10,6 @@ export default function Dash({
     <>
       <Stack 
         p={20}
-        align="center"
-        justify="flex-start"
         w='100vw'
       >
         {children}

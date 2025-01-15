@@ -4,20 +4,16 @@ import { Container, Flex, Text, Center } from '@mantine/core';
 import { notFound } from 'next/navigation';
 import { PrismaClient } from '@prisma/client';
 import CoasterUI from '@/app/components/coasterUI'
+import MovieUI from '@/app/components/movieUI'
 import { useMediaQuery } from '@mantine/hooks'
 import { HeaderMenu } from '@/app/dashboard/header/header';
+import { Tabs, TabsPanel, TabsList, TabsTab } from '@mantine/core'
 
 export default async function SharedRanking({ params }: { params: { userID: string } }) {
   const { userID } = params;
   const prisma = new PrismaClient()
   const api = 'https://captaincoaster.com/api/'
   const key = process.env.API_KEY
-  
-  const ranking = await prisma.coasters.findFirst({
-    where: {
-      userId: userID 
-    }
-  })
 
   const user = await prisma.user.findUnique({
     where: {
@@ -26,6 +22,12 @@ export default async function SharedRanking({ params }: { params: { userID: stri
   })
 
   const username = user?.username
+  
+  const ranking = await prisma.coasters.findFirst({
+    where: {
+      userId: userID 
+    }
+  })
 
   const coasterInfo = async (coasterID: string) => {
     let response = {}
@@ -52,7 +54,20 @@ export default async function SharedRanking({ params }: { params: { userID: stri
 
   const coasters: any[] = Array.isArray(ranking?.topTen) ? ranking.topTen : []
 
-  if (!coasters) {
+  const moviesInfo = async (userID: string) => {
+    const ranking = await prisma.movies.findFirst({
+      where: {
+        userId: userID 
+      }
+    })
+    
+    const response = Array.isArray(ranking?.topTen) ? ranking.topTen : []
+    return response
+  }
+
+  const movies = await moviesInfo(userID)
+
+  if (!coasters && !movies) {
     notFound();
   }
 
@@ -62,23 +77,44 @@ export default async function SharedRanking({ params }: { params: { userID: stri
       <Center>
         <Text size='xl'c='white' fw={600} mt={20} mb={10}>{username}&apos;s Ranking</Text>
       </Center>
-      <Center>
-      <Flex 
-        py={10}
-        px='2%'
-        justify='center'
-        align='flex-start' 
-        direction='row'
-        wrap='wrap'
-        gap='lg'
-        w='fit-content'
-      >
+      <Tabs variant='default' defaultValue="coasters">
+        <TabsList>
+          <TabsTab value="coasters">Coasters</TabsTab>
+          <TabsTab value="movies">Movies</TabsTab>
+        </TabsList>
+      
+        <TabsPanel value="coasters" py="md">
+          <Flex 
+            py={10}
+            px='2%'
+            justify='center'
+            align='flex-start' 
+            direction='row'
+            wrap='wrap'
+            gap='lg'
+            w='fit-content'
+          >
         {await Promise.all(coasters.map(async (coaster: any, index: number) => {
           const coasterDetails = await coasterInfo(coaster.id);
           return <CoasterUI key={index} details={coasterDetails} rank={index+1} />;
         }))}
-      </Flex>
-      </Center>
+          </Flex>
+        </TabsPanel>
+      
+        <TabsPanel value="movies" py="md">
+        <Flex 
+            py={10}
+            justify='center'
+            align='flex-start' 
+            direction='column'
+            wrap='wrap'
+          >
+            {await Promise.all(movies.map(async (movie: any, index: number) => {
+              return <MovieUI key={index} item={movie} rank={index+1} />;
+            }))}
+          </Flex>
+        </TabsPanel>
+      </Tabs>
     </Container>
     </>
   );

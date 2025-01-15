@@ -6,7 +6,7 @@ import Coasters from './coasters/coasters'
 import Movies from './movies/movies'
 import { redirect } from "next/navigation";
 import { getCurrentSession } from "@/auth/session";
-import { Tabs, TabsPanel, TabsList, TabsTab } from '@mantine/core'
+import { Tabs, TabsPanel, TabsList, TabsTab, Stack} from '@mantine/core'
 
 export default async function Home() {
   const { user } = await getCurrentSession();
@@ -18,18 +18,28 @@ export default async function Home() {
       background: 'var(--mantine-color-body)',
     }}>
       <Dash>
-      <Tabs variant='pills' defaultValue="coasters">
+        <Tabs variant='default' defaultValue="coasters">
           <TabsList>
             <TabsTab value="coasters">Coasters</TabsTab>
             <TabsTab value="movies">Movies</TabsTab>
           </TabsList>
 
           <TabsPanel value="coasters" py="md">
-            <Coasters userID={user ? user.id : ''} />
+            <Stack         
+              align="center"
+              justify="flex-start"
+            >
+              <Coasters userID={user ? user.id : ''} />
+            </Stack>
           </TabsPanel>
 
           <TabsPanel value="movies" py="md">
-            <Movies userID={user ? user.id : ''} />
+            <Stack         
+              align="center"
+              justify="flex-start"
+            >
+              <Movies userID={user ? user.id : ''} />
+            </Stack>
           </TabsPanel>
         </Tabs>
       </Dash>
