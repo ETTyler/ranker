@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
           }]
         }
       });
-      const response = newMovieList.topTen;
+      const response = newCoasterList.topTen;
       return NextResponse.json({ response })
     }
 
