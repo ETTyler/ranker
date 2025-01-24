@@ -81,7 +81,6 @@ export async function POST(request: NextRequest) {
       "material": coasterData.materialType.name === undefined ? 'N/A' : coasterData.materialType.name,
       "manufacturer": coasterData.manufacturer.name === undefined ? 'N/A' : coasterData.manufacturer.name,
       "model": coasterData.model === undefined ? coasterData.manufacturer.name : coasterData.model.name,
-      "rank": coasterData.rank === undefined ? 'N/A' : coasterData.rank,
       "image": coasterData.mainImage === undefined ? false : coasterData.mainImage.path,
     }] as Prisma.JsonArray
     : [{
@@ -92,7 +91,6 @@ export async function POST(request: NextRequest) {
       "material": coasterData.materialType.name === undefined ? 'N/A' : coasterData.materialType.name,
       "manufacturer": coasterData.manufacturer.name === undefined ? 'N/A' : coasterData.manufacturer.name,
       "model": coasterData.model === undefined ? coasterData.manufacturer.name : coasterData.model.name,
-      "rank": coasterData.rank === undefined ? 'N/A' : coasterData.rank,
       "image": coasterData.mainImage === undefined ? false : coasterData.mainImage.path,
     }] as Prisma.JsonArray
 
