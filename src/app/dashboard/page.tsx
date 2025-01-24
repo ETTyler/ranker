@@ -4,6 +4,7 @@ import { HeaderMenu } from '../dashboard/header/header'
 import Dash from '../dashboard/dash'
 import Coasters from './coasters/coasters'
 import Movies from './movies/movies'
+import Shows from './shows/shows'
 import { redirect } from "next/navigation";
 import { getCurrentSession } from "@/auth/session";
 import { Tabs, TabsPanel, TabsList, TabsTab, Stack} from '@mantine/core'
@@ -22,6 +23,7 @@ export default async function Home() {
           <TabsList>
             <TabsTab value="coasters">Coasters</TabsTab>
             <TabsTab value="movies">Movies</TabsTab>
+            <TabsTab value="shows">TV Shows</TabsTab>
           </TabsList>
 
           <TabsPanel value="coasters" py="md">
@@ -39,6 +41,15 @@ export default async function Home() {
               justify="flex-start"
             >
               <Movies userID={user ? user.id : ''} />
+            </Stack>
+          </TabsPanel>
+
+          <TabsPanel value="shows" py="md">
+            <Stack         
+              align="center"
+              justify="flex-start"
+            >
+              <Shows userID={user ? user.id : ''} />
             </Stack>
           </TabsPanel>
         </Tabs>

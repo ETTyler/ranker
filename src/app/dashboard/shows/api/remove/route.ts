@@ -18,17 +18,17 @@ export async function POST(request: NextRequest) {
   
   const body = await request.json()
   const userID = body.userID
-  const movieID = body.movieID
+  const showID = body.showID
 
-  const userMovies = await prisma.movies.findFirst({
+  const userShows = await prisma.shows.findFirst({
     where: {
       userId: userID
     },
   })
 
-  const listItems = userMovies?.topTen as unknown as Item[]
+  const listItems = userShows?.topTen as unknown as Item[]
 
-  const index = listItems.findIndex(item => item!.id === movieID)
+  const index = listItems.findIndex(item => item!.id === showID)
   listItems.splice(index,1)
 
   // the updated list is looped through and the rank is set to the index of the array + 1
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     rank: index + 1,
   }))
 
-  const updateMovies = await prisma.movies.updateMany({
+  const updateShows = await prisma.shows.updateMany({
     where: {
       userId: userID
     },

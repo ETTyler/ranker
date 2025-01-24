@@ -21,6 +21,9 @@ model User {
   sessions Session[]
   Coasters Coasters[]
   Movies   Movies[]
+  Shows    Shows[]
+  Songs    Songs[]
+  Albums   Albums[]
 }
 
 model Session {
@@ -38,6 +41,27 @@ model Coasters {
 }
 
 model Movies {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+  topTen Json
+}
+
+model Shows {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+  topTen Json
+}
+
+model Songs {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+  topTen Json
+}
+
+model Albums {
   id     Int    @id @default(autoincrement())
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique

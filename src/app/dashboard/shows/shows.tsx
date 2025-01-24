@@ -1,24 +1,22 @@
 'use client'
-import Coaster from './coaster' 
 import { CopyButton, Stack, Button, Center } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import Search from './search'
+import Show from './show'
 import { DndContext, closestCenter, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useMediaQuery } from '@mantine/hooks'
 import { IconShare3 } from '@tabler/icons-react';
-import { usePathname } from 'next/navigation'
-import { QueryClient } from '@tanstack/react-query'
 
-export default function Coasters( {userID}: {userID: string}) {
-  const [coasters, setCoasters] = useState<any[]>([])
+export default function Shows({userID}: {userID: string}) {
+  const [items, setItems] = useState<any[]>([])
   const [width, setWidth] = useState(0)
   const [url, setUrl] = useState('')
 
-  const coasterRankings = async (userID: string) => {
+  const rankings = async (userID: string) => {
     try {
-      const res = await fetch(`/dashboard/coasters/api/rankings`, {
+      const res = await fetch(`/dashboard/shows/api/rankings`, {
         method: 'POST',
         body: JSON.stringify({userID: userID}),
       })
@@ -30,13 +28,13 @@ export default function Coasters( {userID}: {userID: string}) {
     }
   }
 
-  const updateCoasterRanks = async (updatedCoasters: any[]) => {
+  const updateList = async (updatedList: any[]) => {
     try {
-      const res = await fetch(`/dashboard/coasters/api/update`, {
+      const res = await fetch(`/dashboard/shows/api/update`, {
         method: 'POST',
         body: JSON.stringify({
           userID: userID,
-          coasters: updatedCoasters
+          items: updatedList
         }),
       })
     }
@@ -46,8 +44,8 @@ export default function Coasters( {userID}: {userID: string}) {
   }
 
   useEffect(() => {
-    coasterRankings(userID).then(data => {
-      setCoasters(data.response)
+    rankings(userID).then(data => {
+      setItems(data.response)
     })
     setUrl(window.location.origin)
     setWidth(window.innerWidth)
@@ -61,17 +59,17 @@ export default function Coasters( {userID}: {userID: string}) {
     const { active, over } = event;
 
     if (active.id !== over.id) {
-      const oldIndex = coasters.findIndex((coaster) => coaster.rank === active.id);
-      const newIndex = coasters.findIndex((coaster) => coaster.rank === over.id);
+      const oldIndex = items.findIndex((item) => item.rank === active.id);
+      const newIndex = items.findIndex((item) => item.rank === over.id);
 
-      const newItems = arrayMove(coasters, oldIndex, newIndex);
-      const updatedCoasters = newItems.map((coaster: any, index: number) => ({
-        ...coaster,
+      const newItems = arrayMove(items, oldIndex, newIndex);
+      const updatedMovies = newItems.map((items: any, index: number) => ({
+        ...items,
         rank: index + 1,
       }));
 
-      setCoasters(newItems);
-      updateCoasterRanks(updatedCoasters);
+      setItems(newItems);
+      updateList(updatedMovies);
     }
   }
 
@@ -84,11 +82,7 @@ export default function Coasters( {userID}: {userID: string}) {
     useSensor(TouchSensor)
   )
 
-  const isMobile  = useMediaQuery(`(max-width: 1651px)`);
-  const itemsInRow = Math.floor(width / 534)
-  const itemsInRowMobile = Math.floor(width / 350)
-
-  if (!coasters) return <Search userID={userID} setCoasters={setCoasters} />;
+  if (!items) return <Search userID={userID} setItems={setItems} />;
 
   return (
     <>
@@ -103,20 +97,19 @@ export default function Coasters( {userID}: {userID: string}) {
             </Center>
           )}
         </CopyButton>
-        <Search userID={userID} setCoasters={setCoasters} />
+        <Search userID={userID} setItems={setItems} />
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={coasters.map((coaster) => coaster.rank)}>
+          <SortableContext items={items.map((item) => item.rank)}>
             <div
               style={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 justifyContent: 'flex-start',
                 flexWrap: 'wrap',
-                maxWidth: `${ isMobile ? itemsInRowMobile * 334 : itemsInRow * 534}px`,
               }}
             >
-              {coasters.map((coaster, index) => (
-                <SortableItem key={coaster.rank} coaster={coaster} index={index} userID={userID} setCoasters={setCoasters} />
+              {items.map((item, index) => (
+                <SortableItem key={item.rank} item={item} index={index} userID={userID} setItems={setItems} />
               ))}
             </div>
           </SortableContext>
@@ -126,8 +119,8 @@ export default function Coasters( {userID}: {userID: string}) {
   );
 }
 
-const SortableItem = ({ coaster, index, userID, setCoasters }: { coaster: any, index: number, userID: string, setCoasters: any }) =>{
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: coaster.rank });
+const SortableItem = ({ item, index, userID, setItems }: { item: any, index: number, userID: string, setItems: any }) =>{
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: item.rank });
   const isMobile = useMediaQuery(`(max-width: 800px)`);
 
   const style = {
@@ -137,12 +130,12 @@ const SortableItem = ({ coaster, index, userID, setCoasters }: { coaster: any, i
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...(isMobile ? {} : listeners)}>
-      <Coaster 
-        key={coaster.rank} 
-        details={coaster} 
+      <Show
+        key={item.rank} 
+        item={item} 
         rank={index+1} 
         userID={userID} 
-        setCoasters={setCoasters} 
+        setItems={setItems} 
         listeners={isMobile ? listeners : undefined}  
       />
     </div>
