@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
 
     if (!userCoasters) {
       // If the user does not have a list, create a new one
-      const newCoasterList = await prisma.movies.create({
+      const newCoasterList = await prisma.coasters.create({
         data: {
           userId: userID,
           topTen: [{
@@ -93,7 +93,6 @@ export async function POST(request: NextRequest) {
       "model": coasterData.model === undefined ? coasterData.manufacturer.name : coasterData.model.name,
       "image": coasterData.mainImage === undefined ? false : coasterData.mainImage.path,
     }] as Prisma.JsonArray
-
 
     const updateCoasters = await prisma.coasters.updateMany({
       where: {
