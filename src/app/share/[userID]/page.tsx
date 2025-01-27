@@ -57,7 +57,7 @@ export default async function SharedRanking({ params }: { params: { userID: stri
   const movies = await moviesInfo(userID)
   const shows = await showsInfo(userID)
 
-  if (!coasters && !movies) {
+  if (!coasters && !movies && !shows) {
     notFound();
   }
 
