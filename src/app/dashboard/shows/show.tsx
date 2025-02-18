@@ -62,7 +62,7 @@ export default function Show({item, rank, userID, setItems, listeners}: Props) {
                   <Badge size={isMobile ? 'sm' : 'lg'} color="blue" mb={isMobile ? 0 : 8}>#{rank} </Badge>
                 </div>
                 <Group gap='sm'>
-                  <IconGripVertical size={isMobile? 18 : 23} {...(isMobile ? listeners : {})} style={{touchAction: 'none'}} />
+                  <IconGripVertical size={isMobile? 18 : 22} {...(isMobile ? listeners : {})} style={{touchAction: 'none'}} />
                   <Tooltip label="Remove movie" position='bottom'>
                     <ActionIcon 
                       color='red'
@@ -80,14 +80,14 @@ export default function Show({item, rank, userID, setItems, listeners}: Props) {
                         })
                       }}
                     >
-                    <IconTrash size={isMobile? 20 : 22}/>
+                    <IconTrash size={isMobile? 18 : 22}/>
                     </ActionIcon>
                   </Tooltip>
                 </Group>
               </Flex>
             <div>
-              <Text size={isMobile ? 'sm' : 'lg'} fw={600}>{item.title}</Text>
-              <Text size={isMobile ? 'xs' : 'md'}>{item.network}</Text>
+              <Text size={isMobile ? 'sm' : 'xl'} fw={700}>{item.title}</Text>
+              <Text size={isMobile ? 'xs' : 'md'} fw={500}>{item.network}</Text>
               <Text size={isMobile ? 'xs' : 'md'} c="dimmed">
                 {item.release_date}
               </Text>
