@@ -112,7 +112,7 @@ export default function Coasters( {userID}: {userID: string}) {
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
                 flexWrap: 'wrap',
-                maxWidth: `${ isMobile ? itemsInRowMobile * 334 : itemsInRow * 534}px`,
+                maxWidth: `${isMobile ? itemsInRowMobile * 334 : itemsInRow * 534}px`,
               }}
             >
               {coasters.map((coaster, index) => (

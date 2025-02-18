@@ -13,7 +13,6 @@ interface Props {
 }
 
 export default function CoasterUI({details, rank, userID, setCoasters, listeners}: Props) {
-  console.log(details)
   const removeCoaster = async () => {
     try {
       const res = await fetch(`/dashboard/coasters/api/remove`, {
@@ -41,9 +40,10 @@ export default function CoasterUI({details, rank, userID, setCoasters, listeners
   }
 
   const isMobile = useMediaQuery(`(max-width: 1651px)`);
+
   return (
     <>
-    <Container pb={20} style={{cursor:'grab'}} fluid>
+    <Container pb={20} px={10} style={{cursor:'grab'}} fluid>
     <Card shadow='lg' padding="lg" radius="md" withBorder w={isMobile ? 300 : 500} h={isMobile ? 330 : 460}>
       <Group justify='space-between' wrap='nowrap'>
         <Group wrap='nowrap' gap="5px">

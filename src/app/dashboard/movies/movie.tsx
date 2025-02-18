@@ -80,7 +80,7 @@ export default function Movie({item, rank, userID, setItems, listeners}: Props) 
                         })
                       }}
                     >
-                    <IconTrash size={isMobile? 20 : 23}/>
+                    <IconTrash size={isMobile? 20 : 22}/>
                     </ActionIcon>
                   </Tooltip>
                 </Group>
