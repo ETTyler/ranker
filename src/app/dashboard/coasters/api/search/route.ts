@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
   }
   else {
     const data = await res.json()
-    console.log(data)
     const initialResponse = data['member']
     const coasters = initialResponse.map((coaster: any) => {
       return {
