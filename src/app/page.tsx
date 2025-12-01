@@ -175,7 +175,7 @@ export default function Home() {
           viewport={{ once: true }}
         >
           <Stack gap={40}>
-            <motion.div ta="center">
+            <motion.div>
               <Title order={2} size="h2" mb="md" style={{ fontWeight: 800 }}>
                 How It Works
               </Title>
