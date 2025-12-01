@@ -95,7 +95,6 @@ export async function POST(request: NextRequest) {
     });
 
     const response = updatedList;
-
     return NextResponse.json({ response });
   } catch (err) {
     console.error(err);
